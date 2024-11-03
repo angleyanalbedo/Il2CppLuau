@@ -3,6 +3,7 @@
 #include <imgui/backends/imgui_impl_win32.h>
 #include <imgui/backends/imgui_impl_dx11.h>
 #include "../globals/globals.hpp"
+#include "../utils/console/console.hpp"
 #include <iostream>
 #include "ui.hpp"
 extern auto ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
@@ -168,6 +169,7 @@ void ui::InitUi()
             widget->Render();
         }
     }
+    
     ImGui::EndFrame();
     ImGui::Render();
     dx_hook::Hk11::GetContext()->OMSetRenderTargets(1, dx_hook::Hk11::GetTargetView(), nullptr);
@@ -177,13 +179,20 @@ void ui::InitUi()
 
 void ui::HookDX11()
 {
-    dx_hook::Hk11::Build(ui::InitUi);
+    bool res = dx_hook::Hk11::Build(ui::InitUi);
+    if(res){
+        Console::get()->log("Hooked DX11");
+    }
+    else{
+        Console::get()->log("Failed to hook DX11");
+    }
 };
 
 #include "widgets/ExecutorWidget.hpp"
 void ui::RegisterWidgets()
 {
     m_Widgets.push_back(ExecutorWidget::get());
+   
     int idx = 0;
     for (auto& widget : m_Widgets)
     {
