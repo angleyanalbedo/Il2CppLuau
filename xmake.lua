@@ -29,12 +29,11 @@ package("luau")
     end)
 package_end()
 
-
+ set_arch("x86") 
 add_requires("luau")
 
 target("Il2CppLuau")
     set_kind("shared")
-    -- set_arch("x86") 
     set_languages("cxx20")
     add_files("src/**.cpp")
     add_files("extern/vendor/imgui/imgui_demo.cpp","extern/vendor/imgui/imgui_draw.cpp", "extern/vendor/imgui/imgui_tables.cpp", "extern/vendor/imgui/imgui_widgets.cpp", "extern/vendor/imgui/imgui.cpp")
