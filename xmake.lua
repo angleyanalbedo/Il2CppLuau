@@ -44,7 +44,11 @@ target("Il2CppLuau")
     add_files("extern/vendor/kiero/**.cpp")
     add_includedirs("extern/vendor")
     add_includedirs("extern/include")
-    add_links("extern/vendor/HookManager/lib/detours", "user32")
+    if is_arch("x86") then
+        add_links("extern/vendor/HookManager/lib/x86/detours", "user32")
+    else
+        add_links("extern/vendor/HookManager/lib/x64/detours", "user32")
+    end
     add_includedirs("extern/vendor/luau/VM/include")
     add_includedirs("extern/vendor/luau/Compiler/include", "extern/vendor/luau/Common/include", "extern/vendor/luau/Ast/include")
     add_packages("luau")
